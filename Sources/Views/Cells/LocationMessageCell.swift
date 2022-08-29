@@ -29,7 +29,7 @@ import MapKit
 open class LocationMessageCell: MessageContentCell {
 
     /// The activity indicator to be displayed while the map image is loading.
-    open var activityIndicator = UIActivityIndicatorView(style: .medium)
+//    open var activityIndicator = UIActivityIndicatorView(style: .medium)
 
     /// The image view holding the map image.
     open var imageView = UIImageView()
@@ -40,14 +40,14 @@ open class LocationMessageCell: MessageContentCell {
         super.setupSubviews()
         imageView.contentMode = .scaleAspectFill
         messageContainerView.addSubview(imageView)
-        messageContainerView.addSubview(activityIndicator)
+//        messageContainerView.addSubview(activityIndicator)
         setupConstraints()
     }
 
     /// Responsible for setting up the constraints of the cell's subviews.
     open func setupConstraints() {
         imageView.fillSuperview()
-        activityIndicator.centerInSuperview()
+//        activityIndicator.centerInSuperview()
     }
     
     open override func prepareForReuse() {
@@ -66,7 +66,7 @@ open class LocationMessageCell: MessageContentCell {
 
         guard case let .location(locationItem) = message.kind else { fatalError("") }
 
-        activityIndicator.startAnimating()
+//        activityIndicator.startAnimating()
 
         let snapshotOptions = MKMapSnapshotter.Options()
         snapshotOptions.region = MKCoordinateRegion(center: locationItem.location.coordinate, span: options.span)
@@ -77,7 +77,7 @@ open class LocationMessageCell: MessageContentCell {
         self.snapShotter = snapShotter
         snapShotter.start { (snapshot, error) in
             defer {
-                self.activityIndicator.stopAnimating()
+//                self.activityIndicator.stopAnimating()
             }
             guard let snapshot = snapshot, error == nil else {
                 //show an error image?

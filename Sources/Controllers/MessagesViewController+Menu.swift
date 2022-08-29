@@ -54,22 +54,26 @@ internal extension MessagesViewController {
             selectedIndexPathForMenu = nil
         }
 
-        currentMenuController.hideMenu()
+        if #available(iOSApplicationExtension 13.0, *) {
+            currentMenuController.hideMenu()
+        } else {
+            // Fallback on earlier versions
+        }
 
         guard let selectedCell = messagesCollectionView.cellForItem(at: selectedIndexPath) as? MessageContentCell else {
             return
         }
         let selectedCellMessageBubbleFrame = selectedCell.convert(selectedCell.messageContainerView.frame, to: view)
 
-        var messageInputBarFrame: CGRect = .zero
-        if let messageInputBarSuperview = messageInputBar.superview {
-            messageInputBarFrame = view.convert(messageInputBar.frame, from: messageInputBarSuperview)
-        }
+//        var messageInputBarFrame: CGRect = .zero
+//        if let messageInputBarSuperview = messageInputBar.superview {
+//            messageInputBarFrame = view.convert(messageInputBar.frame, from: messageInputBarSuperview)
+//        }
 
-        var topNavigationBarFrame: CGRect = navigationBarFrame
-        if navigationBarFrame != .zero, let navigationBarSuperview = navigationController?.navigationBar.superview {
-            topNavigationBarFrame = view.convert(navigationController!.navigationBar.frame, from: navigationBarSuperview)
-        }
+//        var topNavigationBarFrame: CGRect = navigationBarFrame
+//        if navigationBarFrame != .zero, let navigationBarSuperview = navigationController?.navigationBar.superview {
+//            topNavigationBarFrame = view.convert(navigationController!.navigationBar.frame, from: navigationBarSuperview)
+//        }
 
         let menuHeight = currentMenuController.menuFrame.height
 
@@ -79,15 +83,19 @@ internal extension MessagesViewController {
         currentMenuController.arrowDirection = .default
 
         /// Message bubble intersects with navigationBar and keyboard
-        if selectedCellMessageBubblePlusMenuFrame.intersects(topNavigationBarFrame) && selectedCellMessageBubblePlusMenuFrame.intersects(messageInputBarFrame) {
-            let centerY = (selectedCellMessageBubblePlusMenuFrame.intersection(messageInputBarFrame).minY + selectedCellMessageBubblePlusMenuFrame.intersection(topNavigationBarFrame).maxY) / 2
-            targetRect = CGRect(selectedCellMessageBubblePlusMenuFrame.midX, centerY, 1, 1)
-        } /// Message bubble only intersects with navigationBar
-        else if selectedCellMessageBubblePlusMenuFrame.intersects(topNavigationBarFrame) {
-            currentMenuController.arrowDirection = .up
-        }
+//        if selectedCellMessageBubblePlusMenuFrame.intersects(topNavigationBarFrame) && selectedCellMessageBubblePlusMenuFrame.intersects(messageInputBarFrame) {
+//            let centerY = (selectedCellMessageBubblePlusMenuFrame.intersection(messageInputBarFrame).minY + selectedCellMessageBubblePlusMenuFrame.intersection(topNavigationBarFrame).maxY) / 2
+//            targetRect = CGRect(selectedCellMessageBubblePlusMenuFrame.midX, centerY, 1, 1)
+//        } /// Message bubble only intersects with navigationBar
+//        else if selectedCellMessageBubblePlusMenuFrame.intersects(topNavigationBarFrame) {
+//            currentMenuController.arrowDirection = .up
+//        }
 
-        currentMenuController.showMenu(from: view, rect: targetRect)
+        if #available(iOSApplicationExtension 13.0, *) {
+            currentMenuController.showMenu(from: view, rect: targetRect)
+        } else {
+            // Fallback on earlier versions
+        }
     }
 
     // MARK: - Helpers

@@ -25,7 +25,7 @@
 import Foundation
 import UIKit
 import Combine
-import InputBarAccessoryView
+//import InputBarAccessoryView
 
 /// A subclass of `UIViewController` with a `MessagesCollectionView` object
 /// that is used to display conversation interfaces.
@@ -34,8 +34,8 @@ open class MessagesViewController: UIViewController, UICollectionViewDelegateFlo
     /// The `MessagesCollectionView` managed by the messages view controller object.
     open var messagesCollectionView = MessagesCollectionView()
 
-    /// The `InputBarAccessoryView` used as the `inputAccessoryView` in the view controller.
-    open lazy var messageInputBar = InputBarAccessoryView()
+//    /// The `InputBarAccessoryView` used as the `inputAccessoryView` in the view controller.
+//    open lazy var messageInputBar = InputBarAccessoryView()
 
     /// Display the date of message by swiping left.
     /// The default value of this property is `false`.
@@ -73,10 +73,10 @@ open class MessagesViewController: UIViewController, UICollectionViewDelegateFlo
         setupDefaults()
         setupSubviews()
         setupConstraints()
-        setupInputBar(for: inputBarType)
+//        setupInputBar(for: inputBarType)
         setupDelegates()
         addObservers()
-        addKeyboardObservers()
+//        addKeyboardObservers()
         addMenuControllerObservers()
         /// Layout input container view and update messagesCollectionViewInsets
         view.layoutIfNeeded()
@@ -103,13 +103,13 @@ open class MessagesViewController: UIViewController, UICollectionViewDelegateFlo
     }
 
     private func setupSubviews() {
-        view.addSubviews(messagesCollectionView, inputContainerView)
+        view.addSubviews(messagesCollectionView)//, inputContainerView)
     }
 
     private func setupConstraints() {
         messagesCollectionView.translatesAutoresizingMaskIntoConstraints = false
         /// Constraints of inputContainerView are managed by keyboardManager
-        inputContainerView.translatesAutoresizingMaskIntoConstraints = false
+//        inputContainerView.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
             messagesCollectionView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -124,48 +124,48 @@ open class MessagesViewController: UIViewController, UICollectionViewDelegateFlo
         messagesCollectionView.dataSource = self
     }
 
-    private func setupInputBar(for kind: MessageInputBarKind) {
-        inputContainerView.subviews.forEach { $0.removeFromSuperview() }
-
-        func pinViewToInputContainer(_ view: UIView) {
-            view.translatesAutoresizingMaskIntoConstraints = false
-            inputContainerView.addSubviews(view)
-
-            NSLayoutConstraint.activate([
-                view.topAnchor.constraint(equalTo: inputContainerView.topAnchor),
-                view.bottomAnchor.constraint(equalTo: inputContainerView.bottomAnchor),
-                view.leadingAnchor.constraint(equalTo: inputContainerView.leadingAnchor),
-                view.trailingAnchor.constraint(equalTo: inputContainerView.trailingAnchor)
-            ])
-        }
-
-        switch kind {
-        case .messageInputBar:
-            pinViewToInputContainer(messageInputBar)
-        case .custom(let view):
-            pinViewToInputContainer(view)
-        }
-    }
+//    private func setupInputBar(for kind: MessageInputBarKind) {
+//        inputContainerView.subviews.forEach { $0.removeFromSuperview() }
+//
+//        func pinViewToInputContainer(_ view: UIView) {
+//            view.translatesAutoresizingMaskIntoConstraints = false
+//            inputContainerView.addSubviews(view)
+//
+//            NSLayoutConstraint.activate([
+//                view.topAnchor.constraint(equalTo: inputContainerView.topAnchor),
+//                view.bottomAnchor.constraint(equalTo: inputContainerView.bottomAnchor),
+//                view.leadingAnchor.constraint(equalTo: inputContainerView.leadingAnchor),
+//                view.trailingAnchor.constraint(equalTo: inputContainerView.trailingAnchor)
+//            ])
+//        }
+//
+//        switch kind {
+////        case .messageInputBar:
+////            pinViewToInputContainer(messageInputBar)
+//        case .custom(let view):
+//            pinViewToInputContainer(view)
+//        }
+//    }
 
     private func addObservers() {
-        NotificationCenter.default
-            .publisher(for: UIApplication.didReceiveMemoryWarningNotification)
-            .subscribe(on: DispatchQueue.global())
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                self?.clearMemoryCache()
-            }
-            .store(in: &disposeBag)
+//        NotificationCenter.default
+//            .publisher(for: UIApplication.didReceiveMemoryWarningNotification)
+//            .subscribe(on: DispatchQueue.global())
+//            .receive(on: DispatchQueue.main)
+//            .sink { [weak self] _ in
+//                self?.clearMemoryCache()
+//            }
+//            .store(in: &disposeBag)
 
-        state.$inputBarType
-            .subscribe(on: DispatchQueue.global())
-            .dropFirst()
-            .removeDuplicates()
-            .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { [weak self] newType in
-                self?.setupInputBar(for: newType)
-            })
-            .store(in: &disposeBag)
+//        state.$inputBarType
+//            .subscribe(on: DispatchQueue.global())
+//            .dropFirst()
+//            .removeDuplicates()
+//            .receive(on: DispatchQueue.main)
+//            .sink(receiveValue: { [weak self] newType in
+//                self?.setupInputBar(for: newType)
+//            })
+//            .store(in: &disposeBag)
     }
 
     private func clearMemoryCache() {

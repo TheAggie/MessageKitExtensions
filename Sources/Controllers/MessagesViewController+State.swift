@@ -25,7 +25,7 @@
 import Foundation
 import UIKit
 import Combine
-import InputBarAccessoryView
+//import InputBarAccessoryView
 
 extension MessagesViewController {
     final class State {
@@ -34,36 +34,36 @@ extension MessagesViewController {
         var maintainPositionOnInputBarHeightChanged: Bool = false
         var scrollsToLastItemOnKeyboardBeginsEditing: Bool = false
 
-        let inputContainerView: MessagesInputContainerView = .init()
-        @Published var inputBarType: MessageInputBarKind = .messageInputBar
-        let keyboardManager: KeyboardManager = KeyboardManager()
-        var disposeBag: Set<AnyCancellable> = .init()
+//        let inputContainerView: MessagesInputContainerView = .init()
+//        @Published var inputBarType: MessageInputBarKind = .messageInputBar
+//        let keyboardManager: KeyboardManager = KeyboardManager()
+//        var disposeBag: Set<AnyCancellable> = .init()
     }
 
     // MARK: - Getters
 
-    var keyboardManager: KeyboardManager { state.keyboardManager }
+//    var keyboardManager: KeyboardManager { state.keyboardManager }
 
     var panGesture: UIPanGestureRecognizer? {
         get { state.panGesture }
         set { state.panGesture = newValue }
     }
 
-    var disposeBag: Set<AnyCancellable> {
-        get { state.disposeBag }
-        set { state.disposeBag = newValue }
-    }
+//    var disposeBag: Set<AnyCancellable> {
+//        get { state.disposeBag }
+//        set { state.disposeBag = newValue }
+//    }
 }
 
 public extension MessagesViewController {
     /// Container holding `messageInputBar` view. To change type of input bar, set `inputBarType` to desired kind.
-    var inputContainerView: MessagesInputContainerView { state.inputContainerView }
+//    var inputContainerView: MessagesInputContainerView { state.inputContainerView }
 
     /// Kind of `messageInputBar` to be added into `inputContainerView`
-    var inputBarType: MessageInputBarKind {
-        get { state.inputBarType }
-        set { state.inputBarType = newValue }
-    }
+//    var inputBarType: MessageInputBarKind {
+//        get { state.inputBarType }
+//        set { state.inputBarType = newValue }
+//    }
 
     /// A Boolean value that determines whether the `MessagesCollectionView`
     /// maintains it's current position when the height of the `MessageInputBar` changes.
